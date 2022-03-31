@@ -84,7 +84,7 @@ function placeMarker(latLng) {
     markers.push(
         newMarker
     );
-    
+  
     // Move the map center to this coordinate
     map.panTo(latLng);    
 }
