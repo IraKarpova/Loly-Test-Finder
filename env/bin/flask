@@ -1,5 +1,5 @@
 #!/bin/sh
-'''exec' "/Users/irinakarpova/Programming/Web Course/Python/maps/env/bin/python3.9" "$0" "$@"
+'''exec' "/Users/irinakarpova/Programming/Web Course/lolytest_project/env/bin/python3.9" "$0" "$@"
 ' '''
 # -*- coding: utf-8 -*-
 import re

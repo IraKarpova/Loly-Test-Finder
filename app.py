@@ -18,15 +18,8 @@ def create_app(test_config=None):
     """ uncomment at the first time running the app """
     # db_drop_and_create_all()
 
-    @app.route('/', methods=['GET'])
+    @app.route("/", methods=['GET', 'POST'])
     def home():
-        return render_template(
-            'map.html', 
-            map_key=os.getenv('GOOGLE_MAPS_API_KEY', 'GOOGLE_MAPS_API_KEY_WAS_NOT_SET?!')
-        )
-
-    @app.route("/new-location", methods=['GET', 'POST'])
-    def new_location():
         form = NewLocationForm()
 
         if form.validate_on_submit():            
@@ -44,10 +37,17 @@ def create_app(test_config=None):
             return redirect(url_for('home'))
 
         return render_template(
-            'new-location.html',
+            'main_page.html',
             form=form,
             map_key=os.getenv('GOOGLE_MAPS_API_KEY', 'GOOGLE_MAPS_API_KEY_WAS_NOT_SET?!')
         ) 
+
+    @app.route('/map', methods=['GET'])
+    def map():
+        return render_template(
+            'map.html', 
+             map_key=os.getenv('GOOGLE_MAPS_API_KEY', 'GOOGLE_MAPS_API_KEY_WAS_NOT_SET?!')
+        )
 
     @app.route("/api/store_item")
     def store_item():

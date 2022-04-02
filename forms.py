@@ -12,4 +12,4 @@ class NewLocationForm(FlaskForm):
 
     coord_longitude = HiddenField('Longitude', validators=[DataRequired()])                    
 
-    submit = SubmitField('Create Location')
+    submit = SubmitField('Search')
