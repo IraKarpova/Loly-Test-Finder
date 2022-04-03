@@ -22,19 +22,18 @@ def create_app(test_config=None):
     def home():
         form = NewLocationForm()
 
-        if form.validate_on_submit():            
+        if form.validate_on_submit():        
             latitude = float(form.coord_latitude.data)
             longitude = float(form.coord_longitude.data)
-            description = form.description.data
 
             location = SampleLocation(
-                description=description,
+                description="temp",
                 geom=SampleLocation.point_representation(latitude=latitude, longitude=longitude)
             )   
             location.insert()
 
             flash(f'New location created!', 'success')
-            return redirect(url_for('home'))
+            return redirect(url_for('map'))
 
         return render_template(
             'main_page.html',

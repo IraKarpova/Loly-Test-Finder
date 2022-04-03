@@ -3,7 +3,7 @@
   <script src="{{ url_for('static', filename='map.js') }}"></script>
 {% endblock %}
 {% block body %}
-       <a href="{{ url_for('new_location') }}">New Location</a>
+        <a href="{{ url_for('home') }}">Back to search</a>
       <!--Sometimes the google map will not render / the page is blank. Giving the map div a height prop and putting it 
         inside another HTML element with fixed size prevents that -->
       <div id="conainer" style="width: 600px; height: 600px;">
