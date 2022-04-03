@@ -4,7 +4,7 @@ from flask import Flask, request, abort, jsonify, render_template, url_for, flas
 from flask_cors import CORS
 import traceback
 from forms import NewLocationForm
-from models import setup_db, SampleLocation, db_drop_and_create_all
+from models import setup_db, LolliTestCenterModel, db_drop_and_create_all
 
 def create_app(test_config=None):
     # create and configure the app
@@ -26,11 +26,13 @@ def create_app(test_config=None):
             latitude = float(form.coord_latitude.data)
             longitude = float(form.coord_longitude.data)
 
-            location = SampleLocation(
-                description="temp",
-                geom=SampleLocation.point_representation(latitude=latitude, longitude=longitude)
+            lolliTestCenter = LolliTestCenterModel(
+                name="temp_name",
+                address="temp_address",
+                imageurl="https://libreshot.com/wp-content/uploads/2016/03/coffee-beans-861x631.jpg",
+                geom=LolliTestCenterModel.point_representation(latitude=latitude, longitude=longitude)
             )   
-            location.insert()
+            lolliTestCenter.insert()
 
             flash(f'New location created!', 'success')
             return redirect(url_for('map'))
@@ -53,18 +55,22 @@ def create_app(test_config=None):
         try:
             latitude = float(request.args.get('lat'))
             longitude = float(request.args.get('lng'))
-            description = request.args.get('description')
+            name = request.args.get('name')
+            address = request.args.get('address')
+            imageurl = request.args.get('imageurl')
 
-            location = SampleLocation(
-                description=description,
-                geom=SampleLocation.point_representation(latitude=latitude, longitude=longitude)
+            lolliTestCenter = LolliTestCenterModel(
+                name=name,
+                address=address,
+                imageurl=imageurl,
+                geom=LolliTestCenterModel.point_representation(latitude=latitude, longitude=longitude)
             )   
-            location.insert()
+            lolliTestCenter.insert()
 
             return jsonify(
                 {
                     "success": True,
-                    "location": location.to_dict()
+                    "location": lolliTestCenter.to_dict()
                 }
             ), 200
         except:
@@ -79,11 +85,11 @@ def create_app(test_config=None):
             longitude = float(request.args.get('lng'))
             radius = int(request.args.get('radius'))
             
-            locations = SampleLocation.get_items_within_radius(latitude, longitude, radius)
+            lolliTestCenters = LolliTestCenterModel.get_items_within_radius(latitude, longitude, radius)
             return jsonify(
                 {
                     "success": True,
-                    "results": locations
+                    "results": lolliTestCenters
                 }
             ), 200
         except:

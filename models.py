@@ -36,30 +36,36 @@ def db_drop_and_create_all():
     db.create_all()
 
     # Initial sample data:
-    insert_sample_locations()
+    insert_db_initial_data()
 
-def insert_sample_locations():
-    loc1 = SampleLocation(
-        description='Brandenburger Tor',
-        geom=SampleLocation.point_representation(
+def insert_db_initial_data():
+    loc1 = LolliTestCenterModel(
+        name="temp_name1",
+        address="temp_address1",
+        imageurl="https://libreshot.com/wp-content/uploads/2016/03/coffee-beans-861x631.jpg",
+        geom=LolliTestCenterModel.point_representation(
             latitude=52.516247, 
             longitude=13.377711
         )
     )
     loc1.insert()
 
-    loc2 = SampleLocation(
-        description='Schloss Charlottenburg',
-        geom=SampleLocation.point_representation(
+    loc2 = LolliTestCenterModel(
+        name="temp_name2",
+        address="temp_address2",
+        imageurl="https://libreshot.com/wp-content/uploads/2016/03/coffee-beans-861x631.jpg",
+        geom=LolliTestCenterModel.point_representation(
             latitude=52.520608, 
             longitude=13.295581
         )
     )
     loc2.insert()
 
-    loc3 = SampleLocation(
-        description='Tempelhofer Feld',
-        geom=SampleLocation.point_representation(
+    loc3 = LolliTestCenterModel(
+        name="temp_name3",
+        address="temp_address3",
+        imageurl="https://libreshot.com/wp-content/uploads/2016/03/coffee-beans-861x631.jpg",
+        geom=LolliTestCenterModel.point_representation(
             latitude=52.473580, 
             longitude=13.405252
         )
@@ -68,11 +74,14 @@ def insert_sample_locations():
 
 class SpatialConstants:
     SRID = 4326
-class SampleLocation(db.Model):
-    __tablename__ = 'sample_locations'
+
+class LolliTestCenterModel(db.Model):
+    __tablename__ = 'lolli_test_centers_table'
 
     id = Column(Integer, primary_key=True)
-    description = Column(String(80))
+    name = Column(String(80))
+    address = Column(String(80))
+    imageurl = Column(String(200))
     geom = Column(Geometry(geometry_type='POINT', srid=SpatialConstants.SRID))  
 
     @staticmethod
@@ -88,9 +97,9 @@ class SampleLocation(db.Model):
         #TODO: The arbitrary limit = 100 is just a quick way to make sure 
         # we won't return tons of entries at once, 
         # paging needs to be in place for real usecase
-        results = SampleLocation.query.filter(
+        results = LolliTestCenterModel.query.filter(
             ST_DWithin(
-                cast(SampleLocation.geom, Geography),
+                cast(LolliTestCenterModel.geom, Geography),
                 cast(from_shape(Point(lng, lat)), Geography),
                 radius)
             ).limit(100).all() 
@@ -108,7 +117,9 @@ class SampleLocation(db.Model):
     def to_dict(self):
         return {
             'id': self.id,
-            'description': self.description,
+            'name': self.name,
+            'address': self.address,
+            'imageurl': self.imageurl,
             'location': {
                 'lng': self.get_location_longitude(),
                 'lat': self.get_location_latitude()
