@@ -22,21 +22,10 @@ def create_app(test_config=None):
     def home():
         form = NewLocationForm()
 
-        if form.validate_on_submit():        
+        if form.validate_on_submit():    
             latitude = float(form.coord_latitude.data)
             longitude = float(form.coord_longitude.data)
-
-            lolliTestCenter = LolliTestCenterModel(
-                name="temp_name",
-                address="temp_address",
-                price="temp 10$",
-                imageurl="https://libreshot.com/wp-content/uploads/2016/03/coffee-beans-861x631.jpg",
-                geom=LolliTestCenterModel.point_representation(latitude=latitude, longitude=longitude)
-            )   
-            lolliTestCenter.insert()
-
-            flash(f'New location created!', 'success')
-            return redirect(url_for('map'))
+            return redirect(url_for('map', latitude=latitude, longitude=longitude))
 
         return render_template(
             'main_page.html',
