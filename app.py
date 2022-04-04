@@ -3,7 +3,7 @@ import sys
 from flask import Flask, request, abort, jsonify, render_template, url_for, flash, redirect
 from flask_cors import CORS
 import traceback
-from forms import NewLocationForm
+from forms import NewLocationForm, NewPharmacyForm
 from models import setup_db, LolliTestCenterModel, db_drop_and_create_all
 
 def create_app(test_config=None):
@@ -29,6 +29,7 @@ def create_app(test_config=None):
             lolliTestCenter = LolliTestCenterModel(
                 name="temp_name",
                 address="temp_address",
+                price="temp 10$",
                 imageurl="https://libreshot.com/wp-content/uploads/2016/03/coffee-beans-861x631.jpg",
                 geom=LolliTestCenterModel.point_representation(latitude=latitude, longitude=longitude)
             )   
@@ -50,6 +51,32 @@ def create_app(test_config=None):
              map_key=os.getenv('GOOGLE_MAPS_API_KEY', 'GOOGLE_MAPS_API_KEY_WAS_NOT_SET?!')
         )
 
+    @app.route('/pharmacy_form', methods=['GET', 'POST'])
+    def pharmacy_form():
+        form = NewPharmacyForm()
+
+        if form.validate_on_submit():        
+            latitude = float(form.coord_latitude.data)
+            longitude = float(form.coord_longitude.data)
+
+            lolliTestCenter = LolliTestCenterModel(
+                name=form.name.data,
+                address=form.address.data,
+                price=form.price.data,
+                imageurl="https://libreshot.com/wp-content/uploads/2016/03/coffee-beans-861x631.jpg",
+                geom=LolliTestCenterModel.point_representation(latitude=latitude, longitude=longitude)
+            )   
+            lolliTestCenter.insert()
+
+            flash(f'New pharmacy created!', 'success')
+            return redirect(url_for('map'))
+
+        return render_template(
+            'pharmacy_form.html', 
+            form=form,
+             map_key=os.getenv('GOOGLE_MAPS_API_KEY', 'GOOGLE_MAPS_API_KEY_WAS_NOT_SET?!')
+        )
+
     @app.route("/api/store_item")
     def store_item():
         try:
@@ -57,11 +84,13 @@ def create_app(test_config=None):
             longitude = float(request.args.get('lng'))
             name = request.args.get('name')
             address = request.args.get('address')
+            price = request.args.get('price')
             imageurl = request.args.get('imageurl')
 
             lolliTestCenter = LolliTestCenterModel(
                 name=name,
                 address=address,
+                price=price,
                 imageurl=imageurl,
                 geom=LolliTestCenterModel.point_representation(latitude=latitude, longitude=longitude)
             )   

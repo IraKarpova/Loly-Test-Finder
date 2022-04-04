@@ -3,12 +3,12 @@ let markers;
 
 let geocoder;
 
-let queryCenter; 
+let queryCenter;
 let queryZoom;
 
 function initMap() {
   console.log('InitMap')
-  
+
   geocoder = new google.maps.Geocoder();
 
   map = new google.maps.Map(document.getElementById("map"), {
@@ -17,27 +17,27 @@ function initMap() {
     minZoom: 6,
     maxZoom: 19,
     // disabling some controls. Reference: https://developers.google.com/maps/documentation/javascript/controls
-    streetViewControl: false, 
+    streetViewControl: false,
     fullscreenControl: false,
     mapTypeControl: false,
     mapTypeId: google.maps.MapTypeId.ROADMAP
   });
 
-  google.maps.event.addListener(map, 'idle', function(){
+  google.maps.event.addListener(map, 'idle', function () {
     var newZoom = map.getZoom();
     var newCenter = map.getCenter();
 
-    console.log("Map  event triggers, zoom:"+newZoom+", center: "+newCenter);
+    console.log("Map  event triggers, zoom:" + newZoom + ", center: " + newCenter);
 
     // We want to avoid re-rendering the markers if the change
     // in position within the map is too small. Also, if we are zooming in
     // without changing the center significantly, there is also no need
     // to call the backend again for new points
-    var distanceChange = (queryCenter == null) ? 0 : google.maps.geometry.spherical.computeDistanceBetween (queryCenter, newCenter);
+    var distanceChange = (queryCenter == null) ? 0 : google.maps.geometry.spherical.computeDistanceBetween(queryCenter, newCenter);
 
     if (queryCenter == null || queryZoom == null || distanceChange > 100 || newZoom < queryZoom) { //if we have not queried for markers yet, query
       refreshMarkers(newCenter, newZoom);
-    }  
+    }
   });
 }
 
@@ -79,57 +79,84 @@ function refreshMarkers(mapCenter, zoomLevel) {
 
   // we call the backend to get the list of markers
   var params = {
-    "lat" : mapCenter.lat(),
-    "lng" : mapCenter.lng(),
-    "radius" : radiusToZoomLevel[zoomLevel]
+    "lat": mapCenter.lat(),
+    "lng": mapCenter.lng(),
+    "radius": radiusToZoomLevel[zoomLevel]
   }
-  var url = "/api/get_items_in_radius?" + dictToURI(params) 
-  loadJSON(url, function(response) {
+  var url = "/api/get_items_in_radius?" + dictToURI(params)
+  loadJSON(url, function (response) {
     // Parse JSON string into object
-      var response_JSON = JSON.parse(response);
-      console.log(response_JSON);
+    var response_JSON = JSON.parse(response);
+    console.log(response_JSON);
 
-      if (!response_JSON.success) {
-          // something failed in the backed serching for the items
-          console.log("/api/get_items_in_radius call FAILED!")
-          return
-      }  
+    if (!response_JSON.success) {
+      // something failed in the backed serching for the items
+      console.log("/api/get_items_in_radius call FAILED!")
+      return
+    }
 
-      // place new markers in the map
-      placeItemsInMap(response_JSON.results)
-   });
+    // place new markers in the map
+    placeItemsInMap(response_JSON.results)
+    // place new markers in the list
+    placeItemsInList(response_JSON.results)
+  });
 }
 
 function placeItemsInMap(items) {
-    // Add some markers to the map.
-    // Note: The code uses the JavaScript Array.prototype.map() method to
-    // create an array of markers based on the given "items" array.
-    // The map() method here has nothing to do with the Google Maps API.
-    markers = items.map(function(item, i) {
-      var marker = new google.maps.Marker({
-        map: map,
-        position: item.location
-      });
-
-      //we attach the item to the marker, so when the marker is selected
-      //we can get all the item data to fill the highlighted profile box under
-      // the map 
-      marker.profile = item;
-
-      return marker;
+  // Add some markers to the map.
+  // Note: The code uses the JavaScript Array.prototype.map() method to
+  // create an array of markers based on the given "items" array.
+  // The map() method here has nothing to do with the Google Maps API.
+  markers = items.map(function (item, i) {
+    var marker = new google.maps.Marker({
+      map: map,
+      position: item.location
     });
 
-    /*console.log(markers);
-    console.log(markers.length);*/
+    //we attach the item to the marker, so when the marker is selected
+    //we can get all the item data to fill the highlighted profile box under
+    // the map 
+    marker.profile = item;
+
+    return marker;
+  });
+
+  /*console.log(markers);
+  console.log(markers.length);*/
+}
+
+function placeItemsInList(items) {
+  // Establish the array which acts as a data source for the list
+  let listContainer = document.getElementById('lolli_test_centers_div'),
+    // Make the list
+    listElement = document.getElementById('lolli_test_centers_list'),
+    // Set up a loop that goes through the items in listItems one at a time
+    numberOfListItems = items.length,
+    listItem,
+    i;
+
+  // Clear the current list data
+  listElement.innerHTML = ''
+
+  for (i = 0; i < numberOfListItems; ++i) {
+    // create an item for each one
+    listItem = document.createElement('li');
+
+    // Add the item text
+    listItem.innerHTML = items[i].address;
+
+    // Add listItem to the listElement
+    listElement.appendChild(listItem);
+  }
 }
 
 function clearMarkers() {
   if (markers) {
-    markers.map(function(marker, i) {
+    markers.map(function (marker, i) {
       marker.setMap(null);
     });
   }
-    
+
   markers = new Array();
   selectedMarker = null;
 }
@@ -138,49 +165,49 @@ function clearMarkers() {
 // To be able to better understand if the radius in which I search for 
 // teachers is well adjussted to the level of zoom of the map, 
 // I add this function to draw a circle showing the radius
-function createCircle(latLng,radius) {
-	options = getDefaultDrawingOptions();
+function createCircle(latLng, radius) {
+  options = getDefaultDrawingOptions();
 
-	options['map']=map;
-	options['center']=latLng;
-	options['radius']=radius;
+  options['map'] = map;
+  options['center'] = latLng;
+  options['radius'] = radius;
 
-	var circle = new google.maps.Circle(options);
-	circle.drawing_type = "circle";
+  var circle = new google.maps.Circle(options);
+  circle.drawing_type = "circle";
 }
 
 function getDefaultDrawingOptions() {
   options = new Array();
-  options['strokeColor']  = "#000000";
+  options['strokeColor'] = "#000000";
   options['strokeOpacity'] = 0.8;
   options['strokeWeight'] = 2;
   options['fillOpacity'] = 0;
   options['geodesic'] = false;
   options['editable'] = false;
   options['draggable'] = false;
-	
-	return options;
+
+  return options;
 }
 
-function loadJSON(url, callback) {   
+function loadJSON(url, callback) {
   var xobj = new XMLHttpRequest();
-  
+
   xobj.overrideMimeType("application/json");
-  xobj.open('GET', url, true); 
+  xobj.open('GET', url, true);
   xobj.onreadystatechange = function () {
-        if (xobj.readyState == 4 && xobj.status == "200") {
-          // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
-          callback(xobj.responseText);
-        }
-        //TODO: what to do in case of failures?
+    if (xobj.readyState == 4 && xobj.status == "200") {
+      // Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+      callback(xobj.responseText);
+    }
+    //TODO: what to do in case of failures?
   };
-  xobj.send(null);  
+  xobj.send(null);
 }
 
 function dictToURI(dict) {
   var str = [];
-  for(var p in dict){
-     str.push(encodeURIComponent(p) + "=" + encodeURIComponent(dict[p]));
+  for (var p in dict) {
+    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(dict[p]));
   }
   return str.join("&");
 }

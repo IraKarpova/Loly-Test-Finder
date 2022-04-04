@@ -36,12 +36,13 @@ def db_drop_and_create_all():
     db.create_all()
 
     # Initial sample data:
-    insert_db_initial_data()
+    insert_db_premium_pharmacies()
 
-def insert_db_initial_data():
+def insert_db_premium_pharmacies():
     loc1 = LolliTestCenterModel(
         name="temp_name1",
         address="temp_address1",
+        price="10$",
         imageurl="https://libreshot.com/wp-content/uploads/2016/03/coffee-beans-861x631.jpg",
         geom=LolliTestCenterModel.point_representation(
             latitude=52.516247, 
@@ -53,6 +54,7 @@ def insert_db_initial_data():
     loc2 = LolliTestCenterModel(
         name="temp_name2",
         address="temp_address2",
+        price="20$",
         imageurl="https://libreshot.com/wp-content/uploads/2016/03/coffee-beans-861x631.jpg",
         geom=LolliTestCenterModel.point_representation(
             latitude=52.520608, 
@@ -64,6 +66,7 @@ def insert_db_initial_data():
     loc3 = LolliTestCenterModel(
         name="temp_name3",
         address="temp_address3",
+        price="30$",
         imageurl="https://libreshot.com/wp-content/uploads/2016/03/coffee-beans-861x631.jpg",
         geom=LolliTestCenterModel.point_representation(
             latitude=52.473580, 
@@ -81,6 +84,7 @@ class LolliTestCenterModel(db.Model):
     id = Column(Integer, primary_key=True)
     name = Column(String(80))
     address = Column(String(80))
+    price = Column(String(80))
     imageurl = Column(String(200))
     geom = Column(Geometry(geometry_type='POINT', srid=SpatialConstants.SRID))  
 
@@ -119,6 +123,7 @@ class LolliTestCenterModel(db.Model):
             'id': self.id,
             'name': self.name,
             'address': self.address,
+            'price': self.price,
             'imageurl': self.imageurl,
             'location': {
                 'lng': self.get_location_longitude(),

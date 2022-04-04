@@ -11,3 +11,16 @@ class NewLocationForm(FlaskForm):
     coord_longitude = HiddenField('Longitude', validators=[DataRequired()])                    
 
     submit = SubmitField('Search')
+
+class NewPharmacyForm(FlaskForm):
+    name = StringField('Name')
+
+    price = StringField('Price')
+
+    address = StringField('Address')
+
+    coord_latitude = HiddenField('Latitude',validators=[DataRequired()])
+
+    coord_longitude = HiddenField('Longitude', validators=[DataRequired()])                    
+
+    submit = SubmitField('Submit')

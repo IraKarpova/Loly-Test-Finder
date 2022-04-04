@@ -1,19 +1,45 @@
 {% extends "layout.html" %}
 {% block head %}
-  <script src="{{ url_for('static', filename='map.js') }}"></script>
+<script src="{{ url_for('static', filename='map.js') }}"></script>
+
+
 {% endblock %}
 {% block body %}
-        <a href="{{ url_for('home') }}">Back to search</a>
-      <!--Sometimes the google map will not render / the page is blank. Giving the map div a height prop and putting it 
+<a href="{{ url_for('home') }}">Back to search</a>
+
+<!-- Write your comments here -->
+<!-- <h1 class="title">{% block title %} Lolli Test Centers {% endblock %}</h1>
+<div class="content">
+  {% for lolliTestCenter in lolliTestCenter %}
+  <div class="lolliTestCenter">
+    <p><b>#{{ lolliTestCenter.id }}</b></p>
+    <b>
+      <p class="name">{{ lolliTestCenter.firstname }} {{ lolliTestCenter.lastname }}</p>
+    </b>
+    <p>{{ lolliTestCenter.name }}</p>
+    <p>{{ lolliTestCenter.address }} years old.</p>
+    <p>Joined: {{ lolliTestCenter.imageurl }}</p>
+    <div class="bio">
+      <h4>Bio</h4>
+      <p>{{ lolliTestCenter.bio }}</p>
+    </div>
+  </div>
+  {% endfor %}
+</div> -->
+<!-- Write your comments here -->
+
+<!--Sometimes the google map will not render / the page is blank. Giving the map div a height prop and putting it 
         inside another HTML element with fixed size prevents that -->
-      <div id="conainer" style="width: 600px; height: 600px;">
-          <!--Google map-->
-          <div id="map" style="height: 100%;"></div>
-      </div>
-  
-      <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
-      <script
-        src="https://maps.googleapis.com/maps/api/js?key={{map_key}}&callback=initMap&libraries=geometry&v=weekly"
-        async
-      ></script>
+<div id="conainer" style="width: 600px; height: 600px;">
+  <!--Google map-->
+  <div id="map" style="height: 100%;"></div>
+</div>
+
+<div class="lolli_test_centers_div">
+  <ol id="lolli_test_centers_list"></ol>
+</div>
+
+<!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+<script src="https://maps.googleapis.com/maps/api/js?key={{map_key}}&callback=initMap&libraries=geometry&v=weekly"
+  async></script>
 {% endblock %}
