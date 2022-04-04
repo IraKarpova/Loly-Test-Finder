@@ -40,8 +40,8 @@ def db_drop_and_create_all():
 
 def insert_db_premium_pharmacies():
     loc1 = LolliTestCenterModel(
-        name="temp_name1",
-        address="temp_address1",
+        name="Good Pharm",
+        address="Swinemünder Straße",
         price="10$",
         imageurl="https://libreshot.com/wp-content/uploads/2016/03/coffee-beans-861x631.jpg",
         geom=LolliTestCenterModel.point_representation(
@@ -52,9 +52,9 @@ def insert_db_premium_pharmacies():
     loc1.insert()
 
     loc2 = LolliTestCenterModel(
-        name="temp_name2",
-        address="temp_address2",
-        price="20$",
+        name="Super Pharm",
+        address="Eberswalder Straße",
+        price="2$",
         imageurl="https://libreshot.com/wp-content/uploads/2016/03/coffee-beans-861x631.jpg",
         geom=LolliTestCenterModel.point_representation(
             latitude=52.520608, 
@@ -64,9 +64,9 @@ def insert_db_premium_pharmacies():
     loc2.insert()
 
     loc3 = LolliTestCenterModel(
-        name="temp_name3",
-        address="temp_address3",
-        price="30$",
+        name="New Pharm",
+        address="Wolliner Straße ",
+        price="3$",
         imageurl="https://libreshot.com/wp-content/uploads/2016/03/coffee-beans-861x631.jpg",
         geom=LolliTestCenterModel.point_representation(
             latitude=52.473580, 
