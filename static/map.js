@@ -12,8 +12,8 @@ function initMap() {
   geocoder = new google.maps.Geocoder();
 
   map = new google.maps.Map(document.getElementById("map"), {
-    center: { lat: 52.5200, lng: 13.4050 }, //We start at the center of Berlin
-    zoom: 11,
+    center: { lat: parseFloat(latitude), lng: parseFloat(longitude) }, //Use location that were passed from the
+    zoom: 13,
     minZoom: 6,
     maxZoom: 19,
     // disabling some controls. Reference: https://developers.google.com/maps/documentation/javascript/controls

@@ -6,6 +6,7 @@ import traceback
 from forms import NewLocationForm, NewPharmacyForm
 from models import setup_db, LolliTestCenterModel, db_drop_and_create_all
 
+
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__)
@@ -22,7 +23,7 @@ def create_app(test_config=None):
     def home():
         form = NewLocationForm()
 
-        if form.validate_on_submit():    
+        if form.validate_on_submit():
             latitude = float(form.coord_latitude.data)
             longitude = float(form.coord_longitude.data)
             return redirect(url_for('map', latitude=latitude, longitude=longitude))
@@ -30,21 +31,34 @@ def create_app(test_config=None):
         return render_template(
             'main_page.html',
             form=form,
-            map_key=os.getenv('GOOGLE_MAPS_API_KEY', 'GOOGLE_MAPS_API_KEY_WAS_NOT_SET?!')
-        ) 
+            map_key=os.getenv('GOOGLE_MAPS_API_KEY',
+                              'GOOGLE_MAPS_API_KEY_WAS_NOT_SET?!')
+        )
 
     @app.route('/map', methods=['GET'])
     def map():
-        return render_template(
-            'map.html', 
-             map_key=os.getenv('GOOGLE_MAPS_API_KEY', 'GOOGLE_MAPS_API_KEY_WAS_NOT_SET?!')
-        )
+        try:
+            latitude = float(request.args.get('latitude'))
+            longitude = float(request.args.get('longitude'))
+
+            return render_template(
+                'map.html',
+                latitude=latitude,
+                longitude=longitude,
+                map_key=os.getenv('GOOGLE_MAPS_API_KEY',
+                                  'GOOGLE_MAPS_API_KEY_WAS_NOT_SET?!')
+            )
+        except:
+            exc_type, exc_value, exc_traceback = sys.exc_info()
+            app.logger.error(traceback.print_exception(
+                exc_type, exc_value, exc_traceback, limit=2))
+            abort(500)
 
     @app.route('/pharmacy_form', methods=['GET', 'POST'])
     def pharmacy_form():
         form = NewPharmacyForm()
 
-        if form.validate_on_submit():        
+        if form.validate_on_submit():
             latitude = float(form.coord_latitude.data)
             longitude = float(form.coord_longitude.data)
 
@@ -53,17 +67,19 @@ def create_app(test_config=None):
                 address=form.address.data,
                 price=form.price.data,
                 imageurl="https://libreshot.com/wp-content/uploads/2016/03/coffee-beans-861x631.jpg",
-                geom=LolliTestCenterModel.point_representation(latitude=latitude, longitude=longitude)
-            )   
+                geom=LolliTestCenterModel.point_representation(
+                    latitude=latitude, longitude=longitude)
+            )
             lolliTestCenter.insert()
 
             flash(f'New pharmacy created!', 'success')
             return redirect(url_for('map'))
 
         return render_template(
-            'pharmacy_form.html', 
+            'pharmacy_form.html',
             form=form,
-             map_key=os.getenv('GOOGLE_MAPS_API_KEY', 'GOOGLE_MAPS_API_KEY_WAS_NOT_SET?!')
+            map_key=os.getenv('GOOGLE_MAPS_API_KEY',
+                              'GOOGLE_MAPS_API_KEY_WAS_NOT_SET?!')
         )
 
     @app.route("/api/store_item")
@@ -81,8 +97,9 @@ def create_app(test_config=None):
                 address=address,
                 price=price,
                 imageurl=imageurl,
-                geom=LolliTestCenterModel.point_representation(latitude=latitude, longitude=longitude)
-            )   
+                geom=LolliTestCenterModel.point_representation(
+                    latitude=latitude, longitude=longitude)
+            )
             lolliTestCenter.insert()
 
             return jsonify(
@@ -93,7 +110,8 @@ def create_app(test_config=None):
             ), 200
         except:
             exc_type, exc_value, exc_traceback = sys.exc_info()
-            app.logger.error(traceback.print_exception(exc_type, exc_value, exc_traceback, limit=2))
+            app.logger.error(traceback.print_exception(
+                exc_type, exc_value, exc_traceback, limit=2))
             abort(500)
 
     @app.route("/api/get_items_in_radius")
@@ -102,8 +120,9 @@ def create_app(test_config=None):
             latitude = float(request.args.get('lat'))
             longitude = float(request.args.get('lng'))
             radius = int(request.args.get('radius'))
-            
-            lolliTestCenters = LolliTestCenterModel.get_items_within_radius(latitude, longitude, radius)
+
+            lolliTestCenters = LolliTestCenterModel.get_items_within_radius(
+                latitude, longitude, radius)
             return jsonify(
                 {
                     "success": True,
@@ -112,7 +131,8 @@ def create_app(test_config=None):
             ), 200
         except:
             exc_type, exc_value, exc_traceback = sys.exc_info()
-            app.logger.error(traceback.print_exception(exc_type, exc_value, exc_traceback, limit=2))
+            app.logger.error(traceback.print_exception(
+                exc_type, exc_value, exc_traceback, limit=2))
             abort(500)
 
     @app.errorhandler(500)
@@ -125,7 +145,8 @@ def create_app(test_config=None):
 
     return app
 
+
 app = create_app()
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT",5000))
-    app.run(host='127.0.0.1',port=port,debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host='127.0.0.1', port=port, debug=True)
