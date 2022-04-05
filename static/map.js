@@ -139,14 +139,44 @@ function placeItemsInList(items) {
   listElement.innerHTML = ''
 
   for (i = 0; i < numberOfListItems; ++i) {
-    // create an item for each one
-    listItem = document.createElement('li');
+    // Create the container
+    var row = document.createElement('div');
+    row.className = 'row justify-content-md-center';
 
-    // Add the item text
-    listItem.innerHTML = items[i].address;
+    // Create image elements
+    var colImage = document.createElement('div');
+    colImage.className = 'col-md-auto pb-3';
+    var img = document.createElement('img');
+    img.className = 'rounded-circle';
+    img.width = 80;
+    img.height = 80;
+    img.src = items[i].imageurl;
+    colImage.appendChild(img)
 
+    // Create data elements
+    var colData = document.createElement('div');
+    colData.className = 'col-sm-4 pt-4';
+    var name = document.createElement('h4');
+    name.innerHTML = items[i].name
+    var address = document.createElement('p');
+    address.innerHTML = items[i].address
+    colData.appendChild(name)
+    colData.appendChild(address)
+
+    // Create price elements 
+    var colPrice = document.createElement('div');
+    colPrice.className = 'col-sm-4 pt-2';
+    var price = document.createElement('h4');
+    price.innerHTML = items[i].price
+    colPrice.appendChild(price)
+
+    // Add all cols
+    row.appendChild(colImage)
+    row.appendChild(colData)
+    row.appendChild(colPrice)
+    
     // Add listItem to the listElement
-    listElement.appendChild(listItem);
+    listElement.appendChild(row);
   }
 }
 
