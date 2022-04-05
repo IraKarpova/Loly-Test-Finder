@@ -36,7 +36,7 @@ function initMap() {
     var distanceChange = (queryCenter == null) ? 0 : google.maps.geometry.spherical.computeDistanceBetween(queryCenter, newCenter);
 
     if (queryCenter == null || queryZoom == null || distanceChange > 100 || newZoom < queryZoom) { //if we have not queried for markers yet, query
-      refreshMarkers(newCenter, newZoom);
+      refreshPharmacies(newCenter, newZoom);
     }
   });
 }
@@ -64,7 +64,7 @@ var radiusToZoomLevel = [
   120,  // zoom: 19
 ];
 
-function refreshMarkers(mapCenter, zoomLevel) {
+function refreshPharmacies(mapCenter, zoomLevel) {
   console.log("refreshing markers")
   //Update query cener and zoom so we know in referenec to what
   //we queried for markers the last time and can decide if a re-query is needed
