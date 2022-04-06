@@ -25,4 +25,4 @@ class NewPharmacyForm(FlaskForm):
 
     coord_longitude = HiddenField('Longitude', validators=[DataRequired()])                    
 
-    submit = SubmitField('Submit')
+    submit = SubmitField('Create')

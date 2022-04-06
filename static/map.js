@@ -142,6 +142,7 @@ function placeItemsInList(items) {
     // Create the container
     var row = document.createElement('div');
     row.className = 'row justify-content-md-center';
+    row.style.backgroundColor = "#EDE9E8";
 
     // Create image elements
     var colImage = document.createElement('div');
