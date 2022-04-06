@@ -73,7 +73,7 @@ def create_app(test_config=None):
             lolliTestCenter.insert()
 
             flash(f'New pharmacy created!', 'success')
-            return redirect(url_for('map'))
+            return redirect(url_for('home'))
 
         return render_template(
             'pharmacy_form.html',
