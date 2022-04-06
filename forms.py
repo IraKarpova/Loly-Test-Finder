@@ -4,7 +4,7 @@ from wtforms.validators import DataRequired, Length
 
 
 class NewLocationForm(FlaskForm):
-    lookup_address = StringField('Search address')
+    lookup_address = StringField('', render_kw={"placeholder": "Search address"})
 
     coord_latitude = HiddenField('Latitude',validators=[DataRequired()])
 
