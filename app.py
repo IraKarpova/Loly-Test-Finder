@@ -66,7 +66,7 @@ def create_app(test_config=None):
                 name=form.name.data,
                 address=form.address.data,
                 price=form.price.data,
-                imageurl="https://libreshot.com/wp-content/uploads/2016/03/coffee-beans-861x631.jpg",
+                imageurl=form.imageurl.data,
                 geom=LolliTestCenterModel.point_representation(
                     latitude=latitude, longitude=longitude)
             )

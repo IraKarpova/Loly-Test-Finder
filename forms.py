@@ -15,9 +15,11 @@ class NewLocationForm(FlaskForm):
 class NewPharmacyForm(FlaskForm):
     name = StringField('Name')
 
-    price = StringField('Price')
+    price = StringField('Price') 
 
     address = StringField('Address')
+
+    imageurl = StringField('Image Url') 
 
     coord_latitude = HiddenField('Latitude',validators=[DataRequired()])
 
