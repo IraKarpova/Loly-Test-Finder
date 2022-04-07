@@ -13,13 +13,13 @@ class NewLocationForm(FlaskForm):
     submit = SubmitField('Search')
 
 class NewPharmacyForm(FlaskForm):
-    name = StringField('Name')
+    name = StringField('', render_kw={"placeholder": "Provide  name"})
 
-    price = StringField('Price') 
+    price = StringField('', render_kw={"placeholder": "Provide price"}) 
 
-    address = StringField('Address')
+    address = StringField('', render_kw={"placeholder": "Provide address"})
 
-    imageurl = StringField('Image Url') 
+    imageurl = StringField('', render_kw={"placeholder": "Provide imageurl"}) 
 
     coord_latitude = HiddenField('Latitude',validators=[DataRequired()])
 

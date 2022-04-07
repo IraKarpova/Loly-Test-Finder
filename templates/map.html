@@ -14,14 +14,14 @@
 {% endblock %}
 
 {% block body %}
-<a href="{{ url_for('home') }}" style="color:black">Back to search</a>
+<a href="{{ url_for('home') }}" style="color:whitesmoke">Back to search</a>
 
 <!--Sometimes the google map will not render / the page is blank. Giving the map div a height prop and putting it 
         inside another HTML element with fixed size prevents that -->
 
 <div class="row">
   <div class="col-sm-6">
-    <div id="conainer" style="width: 600px; height: 600px;">
+    <div id="container" style="width: 600px; height: 600px;">
       <!--Google map-->
       <div id="map" style="height: 100%;"></div>
     </div>
