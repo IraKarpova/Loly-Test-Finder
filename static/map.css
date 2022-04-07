@@ -4,5 +4,15 @@
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
-    -o-background-size: cover; 
+    -o-background-size: cover;
+  }
+
+  ul {
+    height: 600px;
+    width: 100%;
+  }
+
+  ul {
+    overflow: hidden;
+    overflow-y: scroll;
   }
