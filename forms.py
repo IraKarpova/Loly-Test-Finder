@@ -15,7 +15,7 @@ class NewLocationForm(FlaskForm):
 class NewPharmacyForm(FlaskForm):
     name = StringField('', render_kw={"placeholder": "Provide  name"})
 
-    price = StringField('', render_kw={"placeholder": "Provide price"}) 
+    price = StringField('', render_kw={"placeholder": "Provide price €"}) 
 
     address = StringField('', render_kw={"placeholder": "Provide address"})
 
