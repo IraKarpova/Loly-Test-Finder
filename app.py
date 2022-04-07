@@ -3,7 +3,7 @@ import sys
 from flask import Flask, request, abort, jsonify, render_template, url_for, flash, redirect
 from flask_cors import CORS
 import traceback
-from forms import NewLocationForm, NewPharmacyForm
+from forms import ShowPharmaciesForm, NewPharmacyForm
 from models import setup_db, LolliTestCenterModel, db_drop_and_create_all
 
 
@@ -21,7 +21,7 @@ def create_app(test_config=None):
 
     @app.route("/", methods=['GET', 'POST'])
     def home():
-        form = NewLocationForm()
+        form = ShowPharmaciesForm()
 
         if form.validate_on_submit():
             latitude = float(form.coord_latitude.data)

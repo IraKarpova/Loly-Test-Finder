@@ -3,7 +3,7 @@ from wtforms import StringField, SubmitField, HiddenField
 from wtforms.validators import DataRequired, Length
 
 
-class NewLocationForm(FlaskForm):
+class ShowPharmaciesForm(FlaskForm):
     lookup_address = StringField('', render_kw={"placeholder": "Search address"})
 
     coord_latitude = HiddenField('Latitude',validators=[DataRequired()])
