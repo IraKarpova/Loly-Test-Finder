@@ -82,6 +82,14 @@ def create_app(test_config=None):
                               'GOOGLE_MAPS_API_KEY_WAS_NOT_SET?!')
         )
 
+    @app.route("/loginOrRegister", methods=['GET', 'POST'])
+    def loginOrRegister():
+
+        return render_template(
+            'login_page.html',
+
+        )
+
     @app.route("/api/store_item")
     def store_item():
         try:
