@@ -103,6 +103,10 @@ function refreshPharmacies(mapCenter, zoomLevel) {
 }
 
 function placeItemsInMap(items) {
+
+  // init the google map info window for future info showong
+  var infoWindow = new google.maps.InfoWindow();
+
   // Add some markers to the map.
   // Note: The code uses the JavaScript Array.prototype.map() method to
   // create an array of markers based on the given "items" array.
@@ -117,6 +121,11 @@ function placeItemsInMap(items) {
     //we can get all the item data to fill the highlighted profile box under
     // the map 
     marker.profile = item;
+
+    google.maps.event.addListener(marker, 'click', function() {
+      infoWindow.setContent(item.name);
+      infoWindow.open(map, this);
+    });
 
     return marker;
   });
