@@ -122,7 +122,7 @@ function placeItemsInMap(items) {
     // the map 
     marker.profile = item;
 
-    google.maps.event.addListener(marker, 'click', function() {
+    google.maps.event.addListener(marker, 'click', function () {
       infoWindow.setContent(item.name);
       infoWindow.open(map, this);
     });
@@ -152,7 +152,7 @@ function placeItemsInList(items) {
     var row = document.createElement('div');
     row.className = 'row';
     row.style.backgroundColor = "#EDE9E8";
-    
+
 
     // Create image elements
     var colImage = document.createElement('div');
@@ -185,7 +185,7 @@ function placeItemsInList(items) {
     row.appendChild(colImage)
     row.appendChild(colData)
     row.appendChild(colPrice)
-    
+
     // Add listItem to the listElement
     listElement.appendChild(row);
   }

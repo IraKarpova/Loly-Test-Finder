@@ -1,49 +1,48 @@
 .form-control {
-    border-radius: 1rem;
-    width: 25%;
-    margin-left: 37.5%;
+  border-radius: 1rem;
+  width: 25%;
+  margin-left: 37.5%;
 }
 
 /* Style the navigation bar */
 .navbar {
-    width: 100%;
-    overflow: auto;
-  }
-  
-  /* Navbar links */
-  .navbar a {
-    float: left;
-    text-align: center;
-    padding: 12px;
-    color: white;
-    text-decoration: none;
-    font-size: 17px;
-  }
+  width: 100%;
+  overflow: auto;
+}
 
-  /* Navbar links on mouse-over */
+/* Navbar links */
+.navbar a {
+  float: left;
+  text-align: center;
+  padding: 12px;
+  color: white;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Navbar links on mouse-over */
 .navbar a:hover {
-    background-color: gray;
-  }
-  
-  /* Current/active navbar link */
-  .active {
-    background-color: gray;
-  }
-  
-  /* Add responsiveness - will automatically display the navbar vertically instead of horizontally on screens less than 500 pixels */
-  @media screen and (max-width: 500px) {
-    .navbar a {
-      float: none;
-      display: block;
-    }
-  }
+  background-color: gray;
+}
 
-  /* Set a background image by replacing the URL below */
+/* Current/active navbar link */
+.active {
+  background-color: gray;
+}
+
+/* Add responsiveness - will automatically display the navbar vertically instead of horizontally on screens less than 500 pixels */
+@media screen and (max-width: 500px) {
+  .navbar a {
+    float: none;
+    display: block;
+  }
+}
+
+/* Set a background image by replacing the URL below */
 body {
   background: url('https://images.unsplash.com/photo-1618229745753-56040f55d7b1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;
-  -o-background-size: cover; 
+  -o-background-size: cover;
 }
-
