@@ -156,7 +156,7 @@ function placeItemsInList(items) {
 
     // Create image elements
     var colImage = document.createElement('div');
-    colImage.className = 'col-md-auto pt-2';
+    colImage.className = 'col-md-3 pt-2 pb-2';
     var img = document.createElement('img');
     img.className = 'rounded-circle';
     img.width = 80;
@@ -166,7 +166,7 @@ function placeItemsInList(items) {
 
     // Create data elements
     var colData = document.createElement('div');
-    colData.className = 'col-sm-4 pt-2 text-center';
+    colData.className = 'col-md-6 pt-2 pb-2';
     var name = document.createElement('h4');
     name.innerHTML = items[i].name
     var address = document.createElement('p');
@@ -176,7 +176,7 @@ function placeItemsInList(items) {
 
     // Create price elements 
     var colPrice = document.createElement('div');
-    colPrice.className = 'col-sm-4 pt-2 text-center';
+    colPrice.className = 'col-md-3 pt-2 pb-2 text-center';
     var price = document.createElement('h4');
     price.innerHTML = items[i].price
     colPrice.appendChild(price)

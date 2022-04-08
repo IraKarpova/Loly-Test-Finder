@@ -13,7 +13,7 @@ class ShowPharmaciesForm(FlaskForm):
     submit = SubmitField('Search')
 
 class NewPharmacyForm(FlaskForm):
-    name = StringField('', render_kw={"placeholder": "Provide  name"})
+    name = StringField('', render_kw={"placeholder": "Provide name"})
 
     price = StringField('', render_kw={"placeholder": "Provide price €"}) 
 
