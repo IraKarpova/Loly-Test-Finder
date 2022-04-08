@@ -41,35 +41,35 @@ def db_drop_and_create_all():
 def insert_db_premium_pharmacies():
     loc1 = LolliTestCenterModel(
         name="Good Pharm",
-        address="Swinemünder Straße",
-        price="10$",
-        imageurl="https://libreshot.com/wp-content/uploads/2016/03/coffee-beans-861x631.jpg",
+        address="Swinemünder Straße 106, 10435 Berlin",
+        price="10",
+        imageurl="https://images.unsplash.com/photo-1604145942179-63cd583fcf64?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1241&q=80",
         geom=LolliTestCenterModel.point_representation(
-            latitude=52.516247, 
-            longitude=13.377711
+            latitude=52.5391655, 
+            longitude=13.3979498
         )
     )
     loc1.insert()
 
     loc2 = LolliTestCenterModel(
         name="Super Pharm",
-        address="Eberswalder Straße",
-        price="2$",
-        imageurl="https://libreshot.com/wp-content/uploads/2016/03/coffee-beans-861x631.jpg",
+        address="Eberswalder Straße 41 ,10437 Berlin",
+        price="2",
+        imageurl="https://images.unsplash.com/photo-1576602976047-174e57a47881?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1469&q=80",
         geom=LolliTestCenterModel.point_representation(
-            latitude=52.520608, 
-            longitude=13.295581
+            latitude=52.5418862, 
+            longitude=13.4079601
         )
     )
     loc2.insert()
 
     loc3 = LolliTestCenterModel(
         name="New Pharm",
-        address="Wolliner Straße ",
-        price="3$",
-        imageurl="https://libreshot.com/wp-content/uploads/2016/03/coffee-beans-861x631.jpg",
+        address="Wolliner Str. 51 ,10435 Berlin",
+        price="3",
+        imageurl="https://images.unsplash.com/photo-1585435557343-3b092031a831?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80",
         geom=LolliTestCenterModel.point_representation(
-            latitude=52.473580, 
+            latitude=52.5389381, 
             longitude=13.405252
         )
     )
