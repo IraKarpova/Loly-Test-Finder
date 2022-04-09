@@ -13,7 +13,7 @@ function initMap() {
 
   map = new google.maps.Map(document.getElementById("map"), {
     center: { lat: parseFloat(latitude), lng: parseFloat(longitude) }, //Use location that were passed from the
-    zoom: 13,
+    zoom: 15,
     minZoom: 6,
     maxZoom: 19,
     // disabling some controls. Reference: https://developers.google.com/maps/documentation/javascript/controls
@@ -135,14 +135,10 @@ function placeItemsInMap(items) {
 }
 
 function placeItemsInList(items) {
-  // Establish the array which acts as a data source for the list
-  let listContainer = document.getElementById('lolli_test_centers_div'),
-    // Make the list
-    listElement = document.getElementById('lolli_test_centers_list'),
-    // Set up a loop that goes through the items in listItems one at a time
-    numberOfListItems = items.length,
-    listItem,
-    i;
+  let listElement = document.getElementById('lolli_test_centers_list');
+  let numberOfListItems = items.length;
+  let listItem;
+  let i;
 
   // Clear the current list data
   listElement.innerHTML = ''
@@ -152,7 +148,6 @@ function placeItemsInList(items) {
     var row = document.createElement('div');
     row.className = 'row';
     row.style.backgroundColor = "#EDE9E8";
-
 
     // Create image elements
     var colImage = document.createElement('div');
@@ -186,8 +181,16 @@ function placeItemsInList(items) {
     row.appendChild(colData)
     row.appendChild(colPrice)
 
-    // Add listItem to the listElement
+    // Add divider
+    var divider = document.createElement('div');
+    divider.style.backgroundColor = "#d6d1c5";
+    divider.style.height = '1px';
+
+    // Add container to the listElement
     listElement.appendChild(row);
+
+    // Add divider to the listElement
+    listElement.appendChild(divider);
   }
 }
 
