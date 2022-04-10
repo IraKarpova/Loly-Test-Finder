@@ -90,38 +90,6 @@ def create_app(test_config=None):
 
         )
 
-    @app.route("/api/store_item")
-    def store_item():
-        try:
-            latitude = float(request.args.get('lat'))
-            longitude = float(request.args.get('lng'))
-            name = request.args.get('name')
-            address = request.args.get('address')
-            price = request.args.get('price')
-            imageurl = request.args.get('imageurl')
-
-            lolliTestCenter = LolliTestCenterModel(
-                name=name,
-                address=address,
-                price=price,
-                imageurl=imageurl,
-                geom=LolliTestCenterModel.point_representation(
-                    latitude=latitude, longitude=longitude)
-            )
-            lolliTestCenter.insert()
-
-            return jsonify(
-                {
-                    "success": True,
-                    "location": lolliTestCenter.to_dict()
-                }
-            ), 200
-        except:
-            exc_type, exc_value, exc_traceback = sys.exc_info()
-            app.logger.error(traceback.print_exception(
-                exc_type, exc_value, exc_traceback, limit=2))
-            abort(500)
-
     @app.route("/api/get_items_in_radius")
     def get_items_in_radius():
         try:
